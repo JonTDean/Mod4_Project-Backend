@@ -1,7 +1,7 @@
 # README
 
-# Has Login Functionality
+## Has Login Functionality
 
-## Main Routes Are:
+### Main Routes Are:
 /login
 /signup
