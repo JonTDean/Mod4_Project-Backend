@@ -3,5 +3,7 @@
 ## Has Login Functionality
 
 ### Main Routes Are:
-/login
-/signup
+
+* /login
+
+* /signup
