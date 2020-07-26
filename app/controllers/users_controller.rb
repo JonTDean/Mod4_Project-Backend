@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  skip_before_action :authorized, only: [:create, :login, :index, :show]
 
   # GET /users
   def index
@@ -8,18 +8,16 @@ class UsersController < ApplicationController
     render json: @users
   end
 
-  # GET /users/1
-  def show
-    render json: @user
-  end
-
   # POST /users
   def create
     user = User.create(username: params[:username], password: params[:password])
     
-    session[:user_id] = user.id
-    render json: user
-
+    if user.valid?
+      session[:user_id] = user.id
+      render json: user
+    else
+      render json: { message: user.errors.full_messages }, status: :bad_request
+    end
   end
 
   # POST for Login Check
@@ -37,21 +35,20 @@ class UsersController < ApplicationController
 
   # Persists USER LOGIN
   def autologin
-    user = User.find_by(id: session[:user_id])
-    if user 
-      render json: user
-    else
-      render json: { message: "Not Logged In"}, status: :unauthorized
-    end
+      render json: @current_user # Sends back Current User
   end
 
-  # PATCH/PUT /users/1
-  def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+  # Logs out the Current User
+  def logout
+    session.delete(:user_id)
+
+    render json: { message: "Logged Out!"}
+  end
+
+  # Updates the User Profile
+  def profile
+      @current_user.update(username: params[:username], password: params[:password])
+      render json: @current_user
   end
 
   # DELETE /users/1
