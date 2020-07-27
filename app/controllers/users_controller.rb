@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    user = User.create(username: params[:username], password: params[:password], avatar: params[:avatar])
+    user = User.create(username: params[:username], password: params[:password])
     
     if user.valid?
       session[:user_id] = user.id
@@ -47,14 +47,13 @@ class UsersController < ApplicationController
 
   # Updates the User Profile
   def profile
-      @current_user.update(username: params[:username], password: params[:password], avatar: params[:avatar])
+      @current_user.update(username: params[:username], password: params[:password])
       render json: @current_user
   end
 
   # DELETE /users/1
   def destroy
     @user.destroy
-    @user.avatar.purge
   end
 
   private
