@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    user = User.create(username: params[:username], password: params[:password])
+    user = User.create(username: params[:username], password: params[:password], avatar: params[:avatar])
     
     if user.valid?
       session[:user_id] = user.id
@@ -54,6 +54,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
+    @user.avatar.purge
   end
 
   private
