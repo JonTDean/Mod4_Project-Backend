@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   patch '/profile', to: 'users#profile'   # Allows customization of User Data
 
   # Custom Routing for Player
-  post '/character_creation', to 'players#create'
+  post '/character_creation', to: 'players#create'
   
 end
