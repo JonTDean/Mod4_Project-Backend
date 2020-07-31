@@ -8,6 +8,8 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+
+
   # POST /users
   def create
     user = User.create(username: params[:username], password: params[:password])
@@ -53,7 +55,9 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    player = Player.find_by(id: @current_user.id)
+    @current_user.destroy
+    player.destroy
   end
 
   private
