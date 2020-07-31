@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   # Custom Routing for Player
   post '/character_creation', to: 'players#create'
+  get '/findPlayer', to: 'players#findPlayerByName'
   
 end

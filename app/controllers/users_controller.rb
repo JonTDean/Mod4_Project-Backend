@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 
   # Updates the User Profile
   def profile
-      @current_user.update(username: params[:username], password: params[:password])
+      @current_user.update(user_params)
       render json: @current_user
   end
 
